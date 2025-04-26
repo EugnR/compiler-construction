@@ -1,0 +1,12 @@
+var x, y : integer;
+var z : real;
+
+begin
+  x := 10;
+  y := 20;
+  z := x + y * 2.5;
+  if (z >= 50.0)
+    writeln z;
+  else
+    writeln x, y;
+end
