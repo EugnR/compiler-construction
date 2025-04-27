@@ -1,0 +1,8 @@
+var i, i2  : integer ; : var r : real;
+var b : boolean; : end
+
+или
+
+var i, i2  : integer ; : var r : real;
+var b : boolean;
+end

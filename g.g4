@@ -1,5 +1,9 @@
 grammar g;
 
+//* — ноль или больше раз. То есть может быть вообще ничего.
+//+ — один или больше раз. То есть минимум один раз обязательно.
+
+
 // --- Лексерные правила (tokens) ---
 INTEGER: 'integer';
 REAL: 'real';
@@ -46,49 +50,57 @@ ID: [a-zA-Z] [a-zA-Z0-9]*;
 INT_CONST: DIGIT+;
 REAL_CONST: DIGIT+ '.' DIGIT+ (('E'|'e')('+'|'-')? DIGIT+)?;
 
-// Пробелы и пропуски
-WS: [ \t\r\n]+ -> skip;
+// Пробелы и пропуски | все пробельные символы игнорируются и не попадают в список токенов.
+//WS: [ \t\r\n]+ -> skip;
+
+// пропускаются пробелы и табуляции, отлавливаются в токен переносы строки (\r опционально для windows)
+NEWLINE: '\r'? '\n';
+WS: [ \t]+ -> skip;
+
+
 
 // --- Парсерные правила ---
 //program: (description | statement) (COLON | SEMICOLON)* END ;
 //program: (description | statement) ((COLON | SEMICOLON) (description | statement))* END ;
 //program: (description | statement)* END ;
 
-program: ( (description | statement) (COLON | NEWLINE) )+ END;
+program: ( (description | operator) (COLON | NEWLINE) )+ END;
 
 
 
 
 //description: VAR id_list COLON type SEMICOLON ;
-description: VAR (id_list COLON type SEMICOLON)+ ;
+description: VAR (  ID (COMMA ID)*   COLON type SEMICOLON)* ;
 
 
-id_list: ID (COMMA ID)* ;
+//id_list: ID (COMMA ID)* ;
 
 type: INTEGER | REAL | BOOLEAN ;
 
-statement: assignment
-         | compound_statement
-         | if_statement
+operator: assignment_op
+         | compound_op
+         | if_op
          | for_loop
          | while_loop
-         | readln_statement
-         | writeln_statement
+         | readln_op
+         | writeln_op
          ;
 
-assignment: ID ASSIGN expression ;
+//присвоение
+assignment_op: ID ASSIGN expression ;
 
-compound_statement: BEGIN statement (SEMICOLON statement)* END ;
+//составной оператор
+compound_op: BEGIN operator (SEMICOLON operator)* END ;
 
-if_statement: IF LPAREN expression RPAREN statement (ELSE statement)? ;
+if_op: IF LPAREN expression RPAREN operator (ELSE operator)? ;
 
-for_loop: FOR assignment TO expression (STEP expression)? statement NEXT ;
+for_loop: FOR assignment_op TO expression (STEP expression)? operator NEXT ;
 
-while_loop: WHILE LPAREN expression RPAREN statement ;
+while_loop: WHILE LPAREN expression RPAREN operator ;
 
-readln_statement: READLN ID (COMMA ID)* ;
+readln_op: READLN ID (COMMA ID)* ;
 
-writeln_statement: WRITELN expression (COMMA expression)* ;
+writeln_op: WRITELN expression (COMMA expression)* ;
 
 expression: operand (relation_op operand)* ;
 
