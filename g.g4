@@ -46,10 +46,10 @@ COMMENT  : '%' .*? '%' -> skip;
 
 // Литералы (константы)
 BOOLEAN_NUM : 'true' | 'false';
-BINARY_NUM  : [01];
-OCTAL_NUM   : [0-7];
-DECIMAL_NUM : [0-9];
-HEX_NUM     : [0-9A-Fa-f];
+BINARY_NUM  : [01]+ [Bb];
+OCTAL_NUM   : [0-7]+ [Oo];
+DECIMAL_NUM : [0-9]+ ('D' | 'd')?;
+HEX_NUM     : [0-9A-Fa-f]+ [Hh];
 
 // Идентификаторы и числа
 ID        : LETTER (LETTER | DIGIT)* ;
@@ -111,22 +111,8 @@ summand : multiplier (mul_op multiplier)* ;
 multiplier : ID | number | BOOLEAN_NUM | NOT multiplier | LPAREN expression RPAREN ;
 
 //число
-number : integer | real ;
+number : BINARY_NUM | OCTAL_NUM | DECIMAL_NUM | HEX_NUM ;
 
-//целое число
-integer : binary | octal | decimal | hexadecimal ;
-
-//двоичное число
-binary: (BINARY_NUM)+ ('B' | 'b');
-
-//восьмеричное число
-octal: (OCTAL_NUM)+ ('O' | 'o');
-
-//десятичное число
-decimal: (DECIMAL_NUM)+ ('D' | 'd')?;
-
-//шестнадцатиричное число
-hexadecimal: (HEX_NUM)+ ('H' | 'h');
 
 //действительное число
 real : numericString exponent | (numericString)? '.' numericString (exponent)?;
