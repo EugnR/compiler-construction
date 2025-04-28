@@ -49,7 +49,7 @@ BOOLEAN_NUM : 'true' | 'false';
 BINARY_NUM  : [01]+ [Bb];
 OCTAL_NUM   : [0-7]+ [Oo];
 DECIMAL_NUM : [0-9]+ ('D' | 'd')?;
-HEX_NUM     : [0-9A-Fa-f]+ [Hh];
+HEX_NUM     : [0-9]+ [0-9A-Fa-f]* [Hh];
 
 // Идентификаторы и числа
 ID        : LETTER (LETTER | DIGIT)* ;
@@ -108,7 +108,7 @@ operand : summand (add_op summand)* ;
 summand : multiplier (mul_op multiplier)* ;
 
 //множитель
-multiplier : ID | number | BOOLEAN_NUM | NOT multiplier | LPAREN expression RPAREN ;
+multiplier : number | ID |  BOOLEAN_NUM | NOT multiplier | LPAREN expression RPAREN ;
 
 //число
 number : BINARY_NUM | OCTAL_NUM | DECIMAL_NUM | HEX_NUM ;

@@ -1,16 +1,32 @@
 Присваивания `:=`
-
-
+var i, i2  : integer ; : var o : integer; : var h : integer;
+var r : real;
+var b : boolean;    %
+присвоение          %
+i := 1
+i2 := 2d
+o := 1o : o := 3O
+h := 7BCh : h := 0H
 
 Условный if
+if ( i == i2 ) i := i2
+if ( i < i2 ) i2 := i else i2 := 0
 
 Фиксированного цикла for
+for i := 1 to i <= 10 i := i + 1 next
+for i := 1 to i <= 10 step 1 i := i + 1 next
 
 Условного цикла while
+while ( i < 15 ) i := i * 1 %
 
 Ввода readln
+readln r
+readln r,f,n
 
 Вывода writeln
-
+writeln 12341234
+writeln 123,asdf
 
 Составной
+begin readln h end
+begin readln r; writeln i2; i := i / 4 end

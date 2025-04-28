@@ -1,0 +1,26 @@
+var i, i2  : integer ; : var o : integer; : var h : integer;
+var r : real;
+var b : boolean;        %
+                        присвоение          %
+i := 1
+i2 := 2d
+o := 1o : o := 3O
+h := 7BCh : h := 0H     %
+                        условный оператор   %
+if ( i == i2 ) i := i2
+if ( i < i2 ) i2 := i else i2 := 0  %
+                        оператор фиксированного цикла %
+for i := 1 to i <= 10 i := i + 1 next
+for i := 1 to i <= 10 step 1 i := i - 1 next    %
+                        оператор условного цикла    %
+while ( i < 15 ) i := i * 1 %
+                        оператор ввода  %
+readln r
+readln r,f,n            %
+                        оператор вывода %
+writeln 12341234
+writeln 123,asdf        %
+                        составной оператор  %
+begin readln h end
+begin readln r; writeln i2; i := i / 4 end
+end
