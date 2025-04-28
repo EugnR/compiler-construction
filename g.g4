@@ -66,139 +66,85 @@ fragment LETTER : [a-zA-Z];
 // ========== Синтаксические правила (Parser Rules — маленькие буквы) ==========
 
 // Главная точка входа
-program
-    : ( (description | operator) (COLON | NEWLINE) )+ END
-    ;
+program : ( (description | operator) (COLON | NEWLINE) )+ END;
 
 // Описание переменных
-description
-    : VAR (ID (COMMA ID)* COLON type SEMICOLON)*
-    ;
+description : VAR (ID (COMMA ID)* COLON type SEMICOLON)*;
 
 // Типы переменных
-type
-    : INTEGER
-    | REAL
-    | BOOLEAN
-    ;
+type : INTEGER | REAL | BOOLEAN;
 
 // Операторы (операции и управляющие конструкции)
-operator
-    : assignment_op
-    | if_op
-    | for_loop
-    | while_loop
-    | readln_op
-    | writeln_op
-    | compound_op
-    ;
+operator : assignment_op | if_op | for_loop | while_loop | readln_op | writeln_op | compound_op ;
 
 // Оператор присваивания
-assignment_op
-    : ID ASSIGN expression
-    ;
+assignment_op : ID ASSIGN expression ;
 
 // Составной оператор begin ... end
-compound_op
-    : BEGIN operator (SEMICOLON operator)* END
-    ;
+compound_op : BEGIN operator (SEMICOLON operator)* END ;
 
 // Условный оператор
-if_op
-    : IF LPAREN expression RPAREN operator (ELSE operator)?
-    ;
+if_op : IF LPAREN expression RPAREN operator (ELSE operator)? ;
 
 // Цикл for
-for_loop
-    : FOR assignment_op TO expression (STEP expression)? operator NEXT
-    ;
+for_loop : FOR assignment_op TO expression (STEP expression)? operator NEXT ;
 
 // Цикл while
-while_loop
-    : WHILE LPAREN expression RPAREN operator
-    ;
+while_loop : WHILE LPAREN expression RPAREN operator ;
 
 // Оператор ввода
-readln_op
-    : READLN ID (COMMA ID)*
-    ;
+readln_op : READLN ID (COMMA ID)* ;
 
 // Оператор вывода
-writeln_op
-    : WRITELN expression (COMMA expression)*
-    ;
+writeln_op : WRITELN expression (COMMA expression)* ;
 
 // Выражения
-expression
-    : operand (relation_op operand)*
-    ;
+expression : operand (relation_op operand)* ;
 
-operand
-    : summand (add_op summand)*
-    ;
+//операнд
+operand : summand (add_op summand)* ;
 
-summand
-    : multiplier (mul_op multiplier)*
-    ;
+//слагаемое
+summand : multiplier (mul_op multiplier)* ;
 
-multiplier
-    : ID
-    | number
-    | BOOLEAN_NUM
-    | NOT multiplier
-    | LPAREN expression RPAREN
-    ;
+//множитель
+multiplier : ID | number | BOOLEAN_NUM | NOT multiplier | LPAREN expression RPAREN ;
 
-number
-    : integer
-    | real
-    ;
+//число
+number : integer | real ;
 
-integer
-    : binary
-    | octal
-    | decimal
-    | hexadecimal
-    ;
+//целое число
+integer : binary | octal | decimal | hexadecimal ;
 
+//двоичное число
 binary: (BINARY_NUM)+ ('B' | 'b');
 
+//восьмеричное число
 octal: (OCTAL_NUM)+ ('O' | 'o');
 
+//десятичное число
 decimal: (DECIMAL_NUM)+ ('D' | 'd')?;
 
+//шестнадцатиричное число
 hexadecimal: (HEX_NUM)+ ('H' | 'h');
 
-
+//действительное число
 real : numericString exponent | (numericString)? '.' numericString (exponent)?;
 
+//числовая строка
 numericString : (DIGIT)+;
 
+//порядок
 exponent: ('E' | 'e') ('+' | '-')? numericString;
 
 
 
 
 // Операторы отношений
-relation_op
-    : NEQ
-    | EQ
-    | LT
-    | LE
-    | GT
-    | GE
-    ;
+relation_op : NEQ | EQ | LT | LE | GT | GE ;
 
 // Операторы сложения
-add_op
-    : PLUS
-    | MINUS
-    | OR
-    ;
+add_op : PLUS | MINUS | OR ;
 
 // Операторы умножения
-mul_op
-    : MUL
-    | DIV
-    | AND
-    ;
+mul_op : MUL | DIV | AND ;
