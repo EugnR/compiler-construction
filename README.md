@@ -6,7 +6,7 @@ A compiler for a model language built using ANTLR
 
 ---
 # Стэк:
-- java 21
+- java 17
 - antlr 4 version
 
 ---
